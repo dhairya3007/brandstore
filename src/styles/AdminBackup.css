@@ -1,0 +1,112 @@
+.admin-backup {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 900px;
+}
+
+.backup-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.backup-alert {
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-sm);
+  animation: fadeIn 0.3s ease;
+}
+
+.backup-alert.success {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.backup-alert.error {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.backup-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .backup-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.backup-card {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.backup-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(212, 175, 55, 0.1);
+  color: var(--color-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.card-icon.restore-icon {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.backup-card h3 {
+  font-size: var(--font-lg);
+  font-weight: 300;
+  color: var(--color-white);
+}
+
+.backup-card p {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.backup-card .help-text {
+  font-size: var(--font-xs);
+  opacity: 0.7;
+}
+
+.warning-text {
+  color: #e74c3c !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.upload-label {
+  cursor: pointer;
+  margin: 0;
+}

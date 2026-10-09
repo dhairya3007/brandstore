@@ -1,0 +1,224 @@
+.admin-products {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.admin-page-header h1 {
+  font-size: var(--font-xl);
+  font-weight: 300;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+}
+
+.admin-page-header p {
+  color: var(--color-text-muted);
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cta-button.primary {
+  background-color: var(--color-gold);
+  color: var(--color-background);
+  border: 1px solid var(--color-gold);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cta-button.primary:hover {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-background);
+}
+
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-icon {
+  color: var(--color-text-muted);
+  margin-right: 0.5rem;
+}
+
+.admin-search-bar input {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: var(--font-sm);
+  outline: none;
+  width: 100%;
+}
+
+.table-container {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  overflow-x: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-weight: 400;
+  font-size: var(--font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background-color: var(--color-background);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+  color: var(--color-white);
+  font-size: var(--font-sm);
+  transition: background-color 0.3s ease;
+}
+
+.admin-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.admin-table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.table-product {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.table-product img {
+  width: 64px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: var(--color-background);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.table-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.table-product-info strong {
+  font-weight: 400;
+  font-size: var(--font-md);
+  color: var(--color-gold);
+  letter-spacing: 0.05em;
+}
+
+.table-product-info span {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sale-price {
+  color: var(--color-gold);
+  margin-right: 0.5rem;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+  font-size: var(--font-xs);
+}
+
+.status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: var(--font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.status-badge.active {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.status-badge.error {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.table-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.icon-btn {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  padding: 0.6rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn.edit:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+  color: var(--color-gold);
+}
+
+.icon-btn.delete:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.admin-loading, .admin-empty {
+  padding: 3rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}

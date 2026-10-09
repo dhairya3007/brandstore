@@ -1,0 +1,1414 @@
+# BRAND STORE ANAND
+# Complete Frontend + Mock Backend Development Prompt
+
+## 1. Project Overview
+
+Build a complete, modern, premium men's fashion website for **Brand Store Anand**, based on the provided brand logo and the following Instagram reference:
+
+https://www.instagram.com/brand_store_anand/
+
+The store sells men's clothing in multiple categories. The website must include:
+
+1. A premium customer-facing storefront.
+2. A functional admin dashboard.
+3. A mock backend that simulates API operations.
+4. Persistent mock data using browser storage.
+5. A custom animated SVG-based preloader using the brand logo.
+6. Dynamic products, categories, banners, New Collection, featured products, and promotional advertisements.
+7. A clean architecture that allows the mock backend to be replaced later by Flask + SQLAlchemy + SQL without rewriting the React UI.
+
+### Development strategy
+
+We are following a frontend-first, code-organized development approach.
+
+**Phase 1: Build the entire React frontend and fake backend.**
+
+**Phase 2: Later, replace the mock backend with Flask REST APIs, SQLAlchemy models, and a real SQL database.**
+
+Do not implement Flask, SQLAlchemy, PostgreSQL, SQLite, or a real database in this phase.
+
+Do not create a static-only design. All specified buttons, forms, filters, CRUD operations, animations, and user interactions must actually work in the mock environment.
+
+Before starting, inspect the existing project directory and preserve useful files and existing configuration.
+
+---
+
+# 2. Technology Stack
+
+## Frontend
+
+- React.js.
+- Vite.
+- JavaScript, not TypeScript.
+- React Router DOM.
+- Axios-compatible API service architecture.
+- Plain CSS or CSS Modules.
+- Lucide React icons.
+- React Context or lightweight local state for shared application state.
+- Native SVG and CSS animations for the preloader and visual effects.
+
+Use reusable components and a maintainable folder structure.
+
+## Fake Backend
+
+Implement a simulated backend using JavaScript modules.
+
+Use:
+- Mock API service functions.
+- Seed data.
+- localStorage for persistent mock records.
+- Simulated asynchronous requests.
+- Consistent success and error response structures.
+- Client-side validation for the prototype.
+- A service interface compatible with future Flask REST endpoints.
+
+The fake backend must simulate real application behaviour, not merely return static arrays.
+
+## Image Handling
+
+- Use the provided Brand Store logo as the primary branding asset.
+- Support multiple product images.
+- Allow selecting, previewing, replacing, and removing images in the admin forms.
+- Support temporary image previews using browser object URLs.
+- Store browser-compatible image data or suitable mock image references in the development persistence layer.
+- Revoke temporary object URLs when they are no longer needed.
+- Keep image storage behind a service interface so production uploads can later use Cloudinary or another storage provider.
+
+For a practical prototype, use IndexedDB for larger persistent image blobs if necessary, while keeping product metadata in localStorage. Do not assume that object URLs remain valid after a browser refresh.
+
+Never expose the administrator's real credentials or sensitive information in browser storage.
+
+---
+
+# 3. Brand Identity and Design System
+
+Use the uploaded Brand Store Anand logo as the primary source of truth.
+
+The logo features:
+- A black background.
+- A gold circular border.
+- A gold RS-style monogram.
+- White BRAND STORE typography.
+- Gold decorative details.
+
+Create a premium luxury-menswear visual identity throughout the website.
+
+## Brand colour palette
+
+Start with these design tokens:
+
+- Primary background: `#050505`
+- Secondary background: `#111111`
+- Elevated card background: `#181818`
+- Primary gold: `#D7B56D`
+- Dark gold: `#8C6A2F`
+- White: `#FFFFFF`
+- Secondary text: `#B8B8B8`
+- Muted border: `#303030`
+- Success: `#4F9D69`
+- Error: `#D9534F`
+
+Adjust the gold values if necessary to match the uploaded logo more closely.
+
+Define all colours as reusable CSS custom properties.
+
+Example:
+
+- `--color-background`
+- `--color-surface`
+- `--color-gold`
+- `--color-gold-dark`
+- `--color-text`
+- `--color-text-muted`
+- `--color-border`
+
+Do not hardcode inconsistent colours throughout individual components.
+
+## Visual direction
+
+The website must feel:
+- Premium.
+- Elegant.
+- Minimal.
+- Modern.
+- Fashion-focused.
+- Professional.
+- Responsive.
+
+Use:
+- Large fashion photography.
+- Strong typography.
+- Generous spacing.
+- Refined gold accents.
+- Clean product grids.
+- Smooth hover transitions.
+- Elegant section dividers.
+- Consistent button and form styling.
+
+Avoid:
+- Generic ecommerce templates.
+- Excessive gradients.
+- Excessive rounded cards.
+- Unnecessary shadows.
+- Oversized buttons.
+- Distracting animations.
+- Inconsistent typography.
+- Unnecessary UI elements.
+
+Use black backgrounds selectively. Product photographs and text must remain easy to distinguish.
+
+Ensure accessible colour contrast, visible focus indicators, and comfortable mobile touch targets.
+
+---
+
+# 4. Animated SVG Preloader
+
+Create a custom, full-screen preloader for the initial customer website load.
+
+The preloader is an essential brand experience, not a separate page.
+
+## Visual requirements
+
+- Full-screen near-black background.
+- Original Brand Store logo centred.
+- Animated thin gold circular outline inspired by the logo.
+- Gold stroke-drawing effect.
+- Subtle logo opacity reveal.
+- Elegant brand-name reveal.
+- Fine gold progress line or minimal loading indicator.
+- Smooth transition into the homepage.
+
+Use the actual uploaded logo. Do not invent a different logo or distort its proportions.
+
+The source logo is a raster image. Preserve it as an image element and create separate SVG decorations around it. Do not claim that the original raster artwork is a fully editable vector SVG.
+
+## Animation sequence
+
+1. Fade in the black background.
+2. Draw the gold circular outline using SVG stroke animations.
+3. Reveal the logo with a smooth opacity transition.
+4. Add a subtle gold shimmer.
+5. Reveal the brand name using a fade-in and slight upward movement.
+6. Fade the preloader away to reveal the homepage.
+
+Use SVG paths, circles, stroke-dasharray, stroke-dashoffset, opacity, and transforms where appropriate.
+
+Use refined easing curves and avoid spinning the entire logo.
+
+Target a short experience, around 1–2 seconds under normal conditions. Never impose an unnecessary long delay just to show the animation.
+
+## Preloader behaviour
+
+- Show the preloader on the initial application load.
+- Do not show it again on every route navigation.
+- Prevent an initial white flash.
+- Keep the page background consistent with the brand palette.
+- Integrate the preloader into the React application lifecycle.
+- Handle loading errors gracefully.
+- Do not keep the preloader visible indefinitely.
+- Clean up timers and event listeners.
+- Respect `prefers-reduced-motion`.
+- Ensure it does not intercept interactions after dismissal.
+
+Create a reusable component such as `BrandPreloader.jsx` and a separate SVG asset or SVG-based component.
+
+---
+
+# 5. Website-Wide Animation System
+
+Create a consistent, subtle animation language.
+
+Implement:
+- Hero slider transitions.
+- Product-card hover effects.
+- Image zoom with clipped overflow.
+- Gold navigation underline animation.
+- Mobile menu transitions.
+- Smooth dropdowns.
+- Modal entrance and exit transitions.
+- Popup fade-and-scale animation.
+- Loading skeletons.
+- Smooth product-section reveals.
+- Button hover and active states.
+- Subtle badge appearance.
+
+Recommended timings:
+- Small interactions: 180–300 ms.
+- Larger transitions: 300–600 ms.
+
+Prefer CSS transitions and transforms. Avoid continuous animation loops, excessive blur, flashing, and heavy animation libraries.
+
+Animations must not interfere with scrolling, keyboard access, or clicks.
+
+Provide reduced-motion alternatives.
+
+---
+
+# 6. Public Website Pages
+
+Create the following customer-facing pages.
+
+## A. Homepage
+
+Route: `/`
+
+Sections:
+
+1. Responsive navigation bar.
+2. Hero slider.
+3. Shop by Category.
+4. New Collection.
+5. Featured Products.
+6. Promotional campaign section.
+7. Optional brand introduction.
+8. WhatsApp enquiry CTA.
+9. Footer.
+
+Every dynamic section must read from the mock API service.
+
+Do not hardcode production content directly into the components.
+
+## B. Navigation Bar
+
+Include:
+- Brand Store logo.
+- Home.
+- Shop All.
+- Categories dropdown.
+- New Collection.
+- Featured.
+- About Us.
+- Contact.
+- Search.
+- WhatsApp contact action.
+
+Requirements:
+- Desktop navigation.
+- Responsive mobile navigation.
+- Sticky navigation if appropriate.
+- Smooth transitions.
+- Active navigation indicators.
+- Functional links.
+- Logo returns to the homepage.
+
+## C. Hero Slider
+
+Create a full-width premium fashion banner slider.
+
+Each banner should support:
+- Desktop image.
+- Optional mobile image.
+- Heading.
+- Description.
+- CTA text.
+- Target URL.
+- Active state.
+- Display order.
+
+Implement:
+- Smooth slide transitions.
+- Previous and next controls.
+- Pagination indicators.
+- Optional autoplay.
+- Pause controls where appropriate.
+- Responsive image sizing.
+- Loading and empty states.
+
+The admin must control the slider using the dashboard.
+
+## D. Categories
+
+Create dynamic categories such as:
+- Shirts.
+- T-shirts.
+- Jeans.
+- Trousers.
+- Jackets.
+- Ethnic Wear.
+- Casual Wear.
+- Formal Wear.
+- Accessories.
+- Other.
+
+These are starter categories, not a fixed list.
+
+The admin must be able to create, edit, activate, deactivate, and delete categories when safe.
+
+Category pages must display the correct products.
+
+## E. Shop All
+
+Route: `/shop`
+
+Include:
+- Product grid.
+- Search field.
+- Category filters.
+- Price filters.
+- Size filters.
+- Colour filters.
+- Sorting.
+- Pagination.
+- Clear filters.
+- Loading skeletons.
+- Empty states.
+
+Sorting options:
+- Newest.
+- Price low-to-high.
+- Price high-to-low.
+- Name A–Z.
+
+Filters must work on the mock data rather than simply changing their appearance.
+
+## F. Product Details
+
+Route: `/product/:slug`
+
+Display:
+- Product name.
+- Category.
+- Description.
+- Primary image.
+- Multiple product images.
+- Image gallery.
+- Original price.
+- Sale price when applicable.
+- Available sizes.
+- Available colours.
+- Availability status.
+- Related products.
+- WhatsApp enquiry button.
+
+Implement proper not-found states for missing products.
+
+Product pages must be driven by the mock data service.
+
+## G. New Collection
+
+Route: `/collections/new`
+
+Display products whose `isNew` flag is enabled.
+
+Requirements:
+- A NEW badge at the top corner of the product image.
+- Optional subtle badge entrance animation.
+- Admin-controlled collection membership.
+- Consistent sorting.
+- Published products only.
+
+Do not determine collection membership exclusively from creation dates.
+
+## H. Featured Products
+
+Route: `/collections/featured`
+
+Display products whose `isFeatured` flag is enabled.
+
+Support explicit display ordering controlled by the administrator.
+
+## I. About and Contact
+
+Create:
+- `/about`
+- `/contact`
+
+Use editable mock store settings for the store description, phone, address, Instagram URL, and WhatsApp number.
+
+## J. WhatsApp Enquiry
+
+Implement a working WhatsApp link for product enquiries.
+
+Include:
+- Product name.
+- Product URL.
+- Optional selected size and colour.
+
+Read the WhatsApp number from mock store settings.
+
+Use a configurable placeholder number until the owner supplies the actual number.
+
+Do not implement checkout, payment gateways, shopping cart, or order processing in this release.
+
+---
+
+# 7. Admin Dashboard
+
+Route prefix: `/admin`
+
+Build a separate, professional management interface.
+
+The system is intended for one administrator using one designated PC.
+
+Do not implement:
+- Staff accounts.
+- Multiple admin roles.
+- Multi-branch management.
+- Team collaboration.
+- Enterprise permissions.
+
+For this phase, use a clearly identified development-only mock login. This is not production authentication.
+
+## Admin layout
+
+Include:
+- Sidebar navigation.
+- Header.
+- Page title.
+- Breadcrumbs.
+- Main content area.
+- Responsive tables.
+- Search and filter controls.
+- Modals or dedicated edit forms.
+- Toast notifications.
+- Confirmation dialogs.
+- Loading and empty states.
+
+Use the same black, gold, white, and charcoal design system while prioritizing readability and usability.
+
+## A. Dashboard
+
+Route: `/admin/dashboard`
+
+Display counts derived from current mock data:
+- Total products.
+- Published products.
+- Draft products.
+- Categories.
+- New arrivals.
+- Featured products.
+- Active banners.
+- Active advertisements.
+
+Do not hardcode dashboard statistics.
+
+Optional: show recently updated products and upcoming promotions.
+
+Do not invent sales, revenue, or customer analytics that the application does not collect.
+
+## B. Product Management
+
+Route: `/admin/products`
+
+Implement complete simulated CRUD operations.
+
+Features:
+- Product list.
+- Search.
+- Category filter.
+- Status filter.
+- Sorting.
+- Pagination.
+- Add product.
+- View product.
+- Edit product.
+- Delete or archive product.
+- Publish or unpublish.
+- Toggle New Collection.
+- Toggle Featured.
+- Configure display order.
+
+Product fields:
+- Product name.
+- Slug.
+- SKU.
+- Category.
+- Description.
+- Original price.
+- Sale price.
+- Sizes.
+- Colours.
+- Multiple images.
+- Primary image.
+- Optional stock quantity.
+- New Collection flag.
+- Featured flag.
+- Published/draft status.
+- Display order.
+- SEO title.
+- SEO description.
+
+Form requirements:
+- Required-field validation.
+- Price validation.
+- Sale price cannot exceed original price when both are specified.
+- Unique product SKU.
+- Unique slug.
+- Image preview.
+- Image removal.
+- Image ordering.
+- Confirmation before deletion.
+- Clear success and error feedback.
+
+All operations must update the mock backend and immediately reflect on the public website.
+
+## C. Category Management
+
+Route: `/admin/categories`
+
+Implement:
+- Create category.
+- View categories.
+- Edit category.
+- Activate/deactivate.
+- Delete category when safe.
+- Search and sort.
+- Optional category image.
+- Description.
+- Display order.
+
+Prevent unsafe deletion of categories that still have associated products.
+
+## D. Banner Management
+
+Route: `/admin/banners`
+
+Implement:
+- Create banner.
+- Edit banner.
+- Delete banner.
+- Upload or select image.
+- Preview desktop/mobile images.
+- Configure title and description.
+- Configure CTA text and destination.
+- Reorder banners.
+- Activate/deactivate banners.
+
+The public slider must immediately reflect banner changes.
+
+## E. Advertisement Management
+
+Route: `/admin/advertisements`
+
+Each advertisement must support:
+- Title.
+- Description.
+- Promotional image.
+- CTA label.
+- Target URL.
+- Start date.
+- End date.
+- Active/inactive state.
+- Priority.
+- Display delay.
+- Display frequency.
+
+Campaign statuses:
+- Draft.
+- Scheduled.
+- Active.
+- Expired.
+- Inactive.
+
+Derive statuses from the saved configuration and current date.
+
+Implement:
+- Create.
+- Edit.
+- Delete.
+- Preview.
+- Activate/deactivate.
+- Schedule.
+- Change priority.
+
+## F. Popup Settings
+
+Allow the administrator to:
+- Enable or disable the popup.
+- Configure delay.
+- Configure display frequency.
+- Preview the popup.
+- Configure its CTA.
+- Set campaign dates.
+
+Popup rules:
+- Show only active and eligible advertisements.
+- Show the highest-priority eligible popup.
+- Do not repeatedly show it on every route change.
+- Respect the chosen display frequency.
+- Allow customers to close it.
+- Support mobile screens.
+- Provide keyboard-accessible modal behaviour.
+- Use smooth entrance and exit transitions.
+
+## G. Store Settings
+
+Route: `/admin/settings`
+
+Allow editing:
+- Store name.
+- Logo.
+- Contact number.
+- WhatsApp number.
+- Address.
+- Instagram URL.
+- Social links.
+- Default SEO title and description.
+
+Store settings must persist in the mock backend.
+
+---
+
+# 8. Fake Backend Architecture
+
+This is a core requirement.
+
+Do not place all mock logic inside React components.
+
+Create a dedicated mock backend layer that simulates asynchronous REST API calls.
+
+Suggested structure:
+
+`src/mocks/`
+- `seedData.js`
+- `mockDatabase.js`
+- `mockApi.js`
+
+`src/services/`
+- `apiClient.js`
+- `productService.js`
+- `categoryService.js`
+- `bannerService.js`
+- `advertisementService.js`
+- `settingsService.js`
+- `authService.js`
+
+`src/config/`
+- `dataProvider.js`
+
+The exact folder structure may be improved when implementing, but keep the separation between UI, service logic, and storage.
+
+## Mock database
+
+Implement a lightweight mock database abstraction.
+
+Requirements:
+- Initialize seed data only when required.
+- Use stable IDs.
+- Persist records between browser refreshes.
+- Support create, read, update, and delete operations.
+- Avoid resetting existing user changes on every page load.
+- Handle missing and invalid records.
+- Simulate asynchronous delays.
+- Return consistent success and error responses.
+- Use `localStorage` for ordinary metadata.
+- Use IndexedDB for persistent binary image data if necessary.
+
+Never allow UI components to modify stored records directly.
+
+## Mock API behaviour
+
+Implement asynchronous methods such as:
+
+### Products
+- `getProducts(params)`
+- `getProductBySlug(slug)`
+- `createProduct(data)`
+- `updateProduct(id, data)`
+- `deleteProduct(id)`
+- `setProductPublished(id, value)`
+- `setProductNew(id, value)`
+- `setProductFeatured(id, value)`
+
+### Categories
+- `getCategories()`
+- `createCategory(data)`
+- `updateCategory(id, data)`
+- `deleteCategory(id)`
+
+### Banners
+- `getBanners()`
+- `getActiveBanners()`
+- `createBanner(data)`
+- `updateBanner(id, data)`
+- `deleteBanner(id)`
+- `reorderBanners(ids)`
+
+### Advertisements
+- `getAdvertisements()`
+- `getActiveAdvertisements()`
+- `createAdvertisement(data)`
+- `updateAdvertisement(id, data)`
+- `deleteAdvertisement(id)`
+
+### Settings
+- `getStoreSettings()`
+- `updateStoreSettings(data)`
+
+### Authentication
+- `mockLogin(credentials)`
+- `mockLogout()`
+- `getMockSession()`
+
+These methods should behave like asynchronous API operations and return predictable data structures.
+
+Example response convention:
+
+- Success: `{ success: true, data: ... }`
+- Error: `{ success: false, error: { message: ... } }`
+
+Keep the response convention consistent across all mock services.
+
+Simulate reasonable network latency without making the interface feel slow.
+
+Do not use real network requests in mock mode.
+
+## Provider switching
+
+Create a provider selection mechanism:
+
+- `mock` — current development mode.
+- `rest` — reserved for future Flask REST API mode.
+
+The provider must be configurable through an environment variable, such as `VITE_API_MODE=mock`.
+
+When REST mode is implemented later, the React UI should use the same service contracts.
+
+Do not implement a fake REST server or a real Flask backend in this phase.
+
+---
+
+# 9. Data Models for Mock Records
+
+Use JSON-friendly objects that can later map cleanly to SQLAlchemy models.
+
+## Product
+
+Fields:
+- `id`
+- `name`
+- `slug`
+- `sku`
+- `description`
+- `categoryId`
+- `price`
+- `salePrice`
+- `images`
+- `sizes`
+- `colors`
+- `stockQuantity`
+- `isNew`
+- `isFeatured`
+- `status`
+- `displayOrder`
+- `seoTitle`
+- `seoDescription`
+- `createdAt`
+- `updatedAt`
+
+Use `null` where a value is optional.
+
+## Category
+
+Fields:
+- `id`
+- `name`
+- `slug`
+- `description`
+- `image`
+- `isActive`
+- `displayOrder`
+- `createdAt`
+- `updatedAt`
+
+## Product Image
+
+Fields:
+- `id`
+- `productId`
+- `imageUrl` or persistent mock image reference
+- `altText`
+- `sortOrder`
+- `isPrimary`
+
+## Banner
+
+Fields:
+- `id`
+- `title`
+- `description`
+- `imageUrl`
+- `mobileImageUrl`
+- `ctaLabel`
+- `targetUrl`
+- `isActive`
+- `displayOrder`
+- `createdAt`
+- `updatedAt`
+
+## Advertisement
+
+Fields:
+- `id`
+- `title`
+- `description`
+- `imageUrl`
+- `ctaLabel`
+- `targetUrl`
+- `startAt`
+- `endAt`
+- `priority`
+- `displayDelaySeconds`
+- `frequency`
+- `isActive`
+- `createdAt`
+- `updatedAt`
+
+## Store Settings
+
+Fields:
+- `storeName`
+- `logoUrl`
+- `phone`
+- `whatsappNumber`
+- `address`
+- `instagramUrl`
+- `socialLinks`
+- `seoTitle`
+- `seoDescription`
+
+Maintain consistent field names and types throughout the application.
+
+---
+
+# 10. Recommended React Components
+
+Build reusable components.
+
+## Public components
+- `Navbar`
+- `MobileMenu`
+- `HeroSlider`
+- `CategoryCard`
+- `ProductCard`
+- `ProductGrid`
+- `ProductGallery`
+- `ProductFilters`
+- `PriceDisplay`
+- `NewArrivalBadge`
+- `FeaturedSection`
+- `AdvertisementPopup`
+- `Footer`
+- `BrandPreloader`
+- `LoadingSkeleton`
+- `EmptyState`
+- `ErrorState`
+
+## Admin components
+- `AdminLayout`
+- `AdminSidebar`
+- `AdminHeader`
+- `DashboardStats`
+- `DataTable`
+- `ProductForm`
+- `CategoryForm`
+- `BannerForm`
+- `AdvertisementForm`
+- `StoreSettingsForm`
+- `ConfirmDialog`
+- `Toast`
+- `ImageUploader`
+- `StatusBadge`
+
+Use reusable components instead of duplicating the same code across pages.
+
+---
+
+# 11. Suggested Routes
+
+## Public routes
+
+- `/`
+- `/shop`
+- `/category/:slug`
+- `/product/:slug`
+- `/collections/new`
+- `/collections/featured`
+- `/about`
+- `/contact`
+
+## Admin routes
+
+- `/admin/login`
+- `/admin/dashboard`
+- `/admin/products`
+- `/admin/products/new`
+- `/admin/products/:id/edit`
+- `/admin/categories`
+- `/admin/banners`
+- `/admin/advertisements`
+- `/admin/settings`
+
+Implement a mock authentication guard for admin routes.
+
+Do not present mock authentication as production security. The real Flask authentication system will replace it later.
+
+---
+
+# 12. Search Engine Optimization
+
+Implement:
+- Semantic HTML.
+- Descriptive page titles.
+- Meta descriptions.
+- Clean product URLs.
+- Canonical URL support where appropriate.
+- Image alt text.
+- XML sitemap preparation.
+- robots.txt.
+- Breadcrumb navigation.
+- Product structured-data preparation.
+- Responsive images.
+- Lazy loading.
+
+Because the website uses React, prepare for prerendering or server-side rendering if required for reliable indexing of dynamic product pages.
+
+Do not claim full SEO readiness based only on client-side meta tags.
+
+---
+
+# 13. Accessibility and Performance
+
+- Responsive design for all common screen sizes.
+- Keyboard navigation.
+- Visible focus states.
+- Accessible modal dialogs.
+- Descriptive form labels.
+- Appropriate ARIA attributes.
+- Reduced-motion support.
+- Optimized images.
+- Lazy loading below the fold.
+- Avoid unnecessary component re-renders.
+- Avoid large, unnecessary animation libraries.
+- Ensure no horizontal overflow.
+- Prevent layout shifts.
+- Provide proper error and empty states.
+
+The website must remain usable if images fail to load or a mock service returns an error.
+
+---
+
+# 14. Testing Requirements
+
+Test the following workflows end to end.
+
+### Workflow A: Product CRUD
+1. Open the admin dashboard.
+2. Create a new shirt.
+3. Set the category, price, description, sizes, colours, and images.
+4. Save the product.
+5. Verify it appears in the admin list.
+6. Verify it appears on the public website when published.
+7. Edit its price.
+8. Verify the new price is visible publicly.
+9. Refresh the browser and verify the changes persist.
+10. Delete or archive the product and verify the expected result.
+
+### Workflow B: New Collection
+1. Mark a product as new.
+2. Verify its NEW badge appears.
+3. Verify it appears in the New Collection section.
+4. Disable the new-arrival flag.
+5. Verify it disappears from the collection.
+
+### Workflow C: Featured Products
+1. Mark a product as featured.
+2. Verify it appears in the Featured section.
+3. Change its display order.
+4. Verify the order updates.
+5. Disable the featured flag and verify it disappears.
+
+### Workflow D: Banner Management
+1. Create a banner.
+2. Configure its title, image, CTA, and destination.
+3. Activate it.
+4. Verify it appears in the homepage slider.
+5. Change its display order.
+6. Deactivate it and verify it disappears publicly.
+
+### Workflow E: Advertisement Popup
+1. Create a promotional campaign.
+2. Set its image, text, CTA, schedule, and frequency.
+3. Activate it.
+4. Verify it appears when eligible.
+5. Close it.
+6. Verify the frequency configuration is respected.
+7. Disable the campaign and verify it no longer appears.
+
+### Workflow F: Persistence
+1. Change product data.
+2. Refresh the browser.
+3. Verify the data remains.
+4. Navigate between public and admin pages.
+5. Verify both sides reflect the same mock data.
+
+### Workflow G: Responsive Design
+Test:
+- Mobile portrait.
+- Mobile landscape.
+- Tablet.
+- Laptop.
+- Desktop.
+
+Verify the navigation, product grid, slider, product details, admin tables, forms, dialogs, and popup.
+
+### Workflow H: Preloader
+Verify:
+- Correct logo.
+- Smooth gold outline animation.
+- No initial white flash.
+- No repeated preloader on every route.
+- Correct behaviour when loading takes longer.
+- Correct reduced-motion behaviour.
+- No endless loading after an error.
+
+---
+
+# 15. Project Deliverables
+
+Provide:
+- Complete React application.
+- Vite configuration.
+- Mock data and seed records.
+- Mock API layer.
+- Browser persistence layer.
+- Responsive customer website.
+- Admin dashboard.
+- Functional CRUD operations.
+- SVG-based preloader and CSS animations.
+- Central brand design system.
+- Environment example file.
+- README with installation and run instructions.
+- Clear notes on how to replace the mock provider with a future Flask REST API.
+
+Use a clean `.gitignore` and avoid committing secrets or unnecessary build files.
+
+---
+
+# 16. Final Implementation Instructions
+
+1. Inspect the existing project directory before changing files.
+2. Confirm the provided logo is available and use the actual file.
+3. Set up the frontend architecture and brand design system.
+4. Implement the mock database and service layer.
+5. Build the animated preloader.
+6. Build the customer website.
+7. Build the admin dashboard.
+8. Connect both sides to the same mock services.
+9. Test all CRUD workflows and persistence.
+10. Test responsiveness and animation behaviour.
+11. Fix runtime errors and broken interactions.
+12. Document the completed project and its limitations.
+
+Do not stop after generating a visual prototype.
+
+Do not create buttons that have no functionality.
+
+Do not put mock data directly inside React page components.
+
+Do not create the real Flask backend in this phase.
+
+The final result must be a working React frontend with a functional mock backend, persistent sample data, a premium black-and-gold brand identity, and a smooth SVG-based preloader.
+
+The architecture must make the later integration of Flask + SQLAlchemy + SQL straightforward.
+
+# Additional Mandatory Requirement: Fully Responsive UI and Adaptive Sizing
+
+Apply these requirements to the entire Brand Store Anand React frontend, including the public website, admin dashboard, product pages, modals, forms, tables, advertisement popups, and SVG preloader.
+
+## 1. Responsive Design Principles
+
+Build a genuinely responsive website, not a desktop design that merely shrinks on mobile.
+
+Every page must automatically adapt its layout, typography, spacing, images, and interactive elements to the available screen size.
+
+Support:
+- Small mobile phones: 320px–374px.
+- Standard mobile phones: 375px–479px.
+- Large mobile phones: 480px–767px.
+- Tablets: 768px–1023px.
+- Laptops: 1024px–1439px.
+- Large desktop screens: 1440px and above.
+
+These are testing ranges, not rigid device categories. Use flexible CSS layouts and content-based breakpoints where appropriate.
+
+## 2. Responsive Typography
+
+All text must scale appropriately across screen sizes.
+
+Use CSS `clamp()`, `rem`, and relative sizing instead of fixed pixel font sizes wherever practical.
+
+Example:
+
+```css
+:root {
+  --font-xs: clamp(0.7rem, 0.65rem + 0.15vw, 0.8rem);
+  --font-sm: clamp(0.8rem, 0.75rem + 0.2vw, 0.95rem);
+  --font-base: clamp(0.9rem, 0.85rem + 0.25vw, 1.05rem);
+  --font-lg: clamp(1.1rem, 0.95rem + 0.6vw, 1.5rem);
+  --font-xl: clamp(1.4rem, 1.1rem + 1.2vw, 2.2rem);
+  --font-hero: clamp(2rem, 1.2rem + 4vw, 4.8rem);
+}
+```
+
+Apply adaptive sizing to:
+- Hero headings.
+- Section headings.
+- Product names.
+- Product descriptions.
+- Prices and discount labels.
+- Navigation links.
+- Buttons.
+- Form labels and inputs.
+- Dashboard headings and statistics.
+- Table content.
+- Modal text.
+- Footer content.
+
+Requirements:
+- Prevent headings from overflowing their containers.
+- Allow text to wrap naturally.
+- Use sensible line heights.
+- Avoid unnecessarily tiny text on mobile.
+- Use truncation only when appropriate, with access to the complete content.
+- Do not shrink all text uniformly; prioritize readability and hierarchy.
+
+## 3. Responsive Layouts
+
+Use:
+- CSS Grid.
+- Flexbox.
+- `minmax()`.
+- Relative widths.
+- `max-width`.
+- `min-width: 0` where needed.
+- Fluid spacing.
+- Responsive container widths.
+
+Example product grid:
+
+```css
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.65rem, 1.5vw, 1.5rem);
+}
+
+@media (max-width: 1023px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .product-grid {
+    gap: 0.5rem;
+  }
+}
+```
+
+Adapt the layout according to the actual content and available space.
+
+Do not force four product columns onto mobile screens.
+
+Use consistent container widths, responsive horizontal padding, and balanced whitespace throughout the website.
+
+## 4. Responsive Navigation
+
+Desktop:
+- Full navigation bar.
+- Proper spacing between links.
+- Search and contact actions.
+
+Mobile and tablet:
+- Compact logo.
+- Collapsible navigation menu.
+- Touch-friendly menu controls.
+- No overlapping navigation items.
+- No horizontal scrolling.
+- Clear open and close states.
+
+The navigation must work with touch, mouse, and keyboard interactions.
+
+## 5. Responsive Product Cards and Images
+
+Product cards must resize naturally without distorting product photography.
+
+Requirements:
+- Use `width: 100%` and suitable `aspect-ratio` values.
+- Use `object-fit: cover` or `contain` according to the image's purpose.
+- Keep product images aligned consistently.
+- Scale product names, prices, badges, and action buttons.
+- Prevent long product names from breaking card layouts.
+- Maintain readable prices and discounts.
+- Keep the NEW badge positioned correctly at every size.
+- Use smaller card gaps on mobile.
+- Avoid fixed card heights that cause text clipping.
+
+Use responsive image sources where useful, including separate desktop and mobile hero images.
+
+Product detail pages should change from a side-by-side gallery and details layout on larger screens to a stacked layout on mobile.
+
+## 6. Responsive Hero Slider
+
+The homepage slider must:
+- Adapt to different viewport widths.
+- Support separate mobile banner images.
+- Use appropriate image aspect ratios.
+- Keep heading and CTA text readable over the image.
+- Reposition content when required.
+- Prevent text from overlapping important image subjects.
+- Maintain smooth transitions.
+- Avoid excessive slider height on small screens.
+
+Do not simply crop the desktop banner for every mobile screen when a dedicated mobile image is available.
+
+## 7. Responsive Admin Dashboard
+
+The admin dashboard must work on the designated management PC while remaining usable on tablets and mobile devices.
+
+Desktop:
+- Expandable or fixed sidebar.
+- Main dashboard content.
+- Responsive statistics cards.
+- Searchable management tables.
+- Comfortable form layouts.
+
+Tablet:
+- Collapsible sidebar.
+- Reduced spacing.
+- Flexible statistics grid.
+- Responsive forms and tables.
+
+Mobile:
+- Collapsible navigation or drawer.
+- Single-column or compact statistics cards.
+- Stacked form fields.
+- Touch-friendly actions.
+- Horizontally scrollable data tables when necessary.
+- Important actions remain accessible.
+
+Never allow wide tables to force the entire page beyond the viewport.
+
+Use horizontal scrolling inside the table container or switch to a stacked card layout where appropriate.
+
+## 8. Responsive Forms, Dialogs, and Popups
+
+All product forms, category forms, banner forms, advertisement forms, confirmation dialogs, and promotional popups must adapt to screen size.
+
+Requirements:
+- Full-width fields on narrow screens.
+- Multiple columns only when sufficient space is available.
+- Responsive image previews.
+- Buttons that wrap or stack naturally.
+- Modals constrained to the viewport.
+- Internal scrolling for tall dialogs.
+- Visible close buttons.
+- No content hidden behind fixed headers or footers.
+- Adequate spacing between touch targets.
+- Keyboard accessibility.
+
+The advertisement popup must fit small mobile screens without clipping its CTA or close button.
+
+## 9. Responsive SVG Preloader
+
+The Brand Store animated SVG preloader must scale proportionally across all supported devices.
+
+Requirements:
+- Keep the logo centred.
+- Preserve the logo's aspect ratio.
+- Scale the circular gold outline with the logo.
+- Keep the loading bar within the viewport.
+- Scale decorative elements and typography appropriately.
+- Avoid clipping on short screens.
+- Use a flexible SVG `viewBox`.
+- Use CSS such as `width: min(80vw, 420px)` for the logo wrapper where suitable.
+- Ensure the full-screen preloader adapts to landscape mobile screens.
+- Preserve smooth animations at all sizes.
+- Respect reduced-motion preferences.
+
+Do not stretch the SVG or independently scale its width and height.
+
+## 10. Responsive Spacing and Controls
+
+Use shared spacing tokens and fluid values.
+
+Example:
+
+```css
+:root {
+  --page-padding: clamp(1rem, 4vw, 3.5rem);
+  --section-spacing: clamp(2.5rem, 6vw, 5.5rem);
+  --card-gap: clamp(0.65rem, 1.5vw, 1.5rem);
+  --control-height: 2.75rem;
+}
+```
+
+Ensure:
+- Buttons do not overflow their containers.
+- Inputs remain usable at small widths.
+- Icons stay aligned with their labels.
+- Margins and padding adapt to the viewport.
+- Fixed and sticky elements do not cover important content.
+
+## 11. No Horizontal Overflow
+
+The entire website must not produce unintended horizontal scrolling at any supported viewport width.
+
+Pay particular attention to:
+- Navigation bars.
+- Hero sliders.
+- Product grids.
+- Long product names.
+- Tables.
+- Modals.
+- Images.
+- SVG elements.
+- Forms.
+- Admin sidebars.
+
+Use `min-width: 0`, `max-width: 100%`, appropriate wrapping, and contained overflow where needed.
+
+Do not solve every overflow issue by applying `overflow-x: hidden` to the whole page; fix the actual layout problem.
+
+## 12. Responsive Testing Is Mandatory
+
+Test at these viewport sizes:
+- 320 × 568.
+- 360 × 800.
+- 390 × 844.
+- 430 × 932.
+- 768 × 1024.
+- 1024 × 768.
+- 1366 × 768.
+- 1440 × 900.
+- 1920 × 1080.
+
+Also test landscape mobile orientation and browser zoom where practical.
+
+Verify:
+- Typography and line wrapping.
+- Navigation behaviour.
+- Product card sizing.
+- Hero image cropping.
+- Forms and buttons.
+- Dashboard tables.
+- Modal and popup positioning.
+- SVG preloader.
+- No clipped content.
+- No unintended horizontal scrolling.
+
+## Final Responsive Acceptance Criteria
+
+The website is not complete until the customer storefront and admin dashboard both work properly on mobile, tablet, laptop, and desktop.
+
+All text, images, layouts, controls, and spacing must adapt automatically. The website must preserve the premium black-and-gold brand identity at every viewport size.
+
+Responsive behaviour is a core requirement, not an optional final polish step.

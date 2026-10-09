@@ -1,0 +1,90 @@
+.admin-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+}
+
+.settings-container {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.settings-section h3 {
+  font-size: var(--font-md);
+  font-weight: 400;
+  color: var(--color-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.settings-section .form-row {
+  display: flex;
+  gap: 2rem;
+}
+
+.settings-section .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-section label {
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.settings-section input {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: var(--font-sm);
+  transition: border-color 0.3s ease;
+}
+
+.settings-section input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.help-text {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.success-message {
+  color: #2ecc71;
+  font-size: var(--font-sm);
+  font-weight: 500;
+}
+
+.save-btn {
+  display: flex;
+  align-items: center;
+}
