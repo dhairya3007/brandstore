@@ -32,8 +32,12 @@ export default function PromoPopup() {
   const handleImageClick = () => {
     if (adConfig.adLinkProduct) {
       handleClose();
-      // Navigate to shop and maybe open the product (query param)
-      navigate(`/shop?product=${adConfig.adLinkProduct}`);
+      if (adConfig.adLinkProduct.startsWith('cat:')) {
+        const catName = adConfig.adLinkProduct.replace('cat:', '');
+        navigate(`/shop?category=${encodeURIComponent(catName)}`);
+      } else {
+        navigate(`/shop?product=${adConfig.adLinkProduct}`);
+      }
     }
   };
 

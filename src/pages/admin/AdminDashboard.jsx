@@ -6,6 +6,7 @@ import '../../styles/AdminDashboard.css';
 
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [settings, setSettings] = useState(null);
   const [savingAd, setSavingAd] = useState(false);
@@ -13,12 +14,14 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const loadData = async () => {
-      const [resProd, resSet] = await Promise.all([
+      const [resProd, resSet, resCat] = await Promise.all([
         productService.getProducts(),
-        productService.getSettings()
+        productService.getSettings(),
+        productService.getCategories()
       ]);
       
       if (resProd.success) setProducts(resProd.data);
+      if (resCat.success) setCategories(resCat.data);
       if (resSet.success) {
         setSettings({
           ...resSet.data,
@@ -234,16 +237,25 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="form-group">
-                    <label>Link to Product (Select Product)</label>
+                    <label>Link Destination (Product or Category)</label>
                     <select 
                       value={settings.adLinkProduct} 
                       onChange={(e) => setSettings({...settings, adLinkProduct: e.target.value})}
                       disabled={!settings.adEnabled}
                     >
                       <option value="">-- No Link (Just an Image) --</option>
-                      {products.map(p => (
-                        <option key={p.id} value={p.id}>{p.name}</option>
-                      ))}
+                      
+                      <optgroup label="Categories">
+                        {categories.map(c => (
+                          <option key={`cat_${c.id}`} value={`cat:${c.name}`}>[Category] {c.name}</option>
+                        ))}
+                      </optgroup>
+
+                      <optgroup label="Products">
+                        {products.map(p => (
+                          <option key={`prod_${p.id}`} value={p.id}>{p.name}</option>
+                        ))}
+                      </optgroup>
                     </select>
                   </div>
 

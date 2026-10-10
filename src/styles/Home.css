@@ -353,3 +353,17 @@
   background-color: var(--color-gold);
   color: var(--color-background);
 }
+
+@media (max-width: 500px) {
+  .price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .inquiry-btn-small {
+    width: 100%;
+    text-align: center;
+    padding: 6px;
+    font-size: 11px;
+  }
+}

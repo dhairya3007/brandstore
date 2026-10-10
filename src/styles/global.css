@@ -38,3 +38,18 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Global mobile adjustments for product cards */
+@media (max-width: 500px) {
+  .price-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .inquiry-btn-small {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 8px !important;
+    font-size: 11px !important;
+  }
+}
